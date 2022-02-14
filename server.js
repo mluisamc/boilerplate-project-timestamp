@@ -25,23 +25,21 @@ app.get("/api/hello", function (req, res) {
 });
 
 
-app.get('/api/:date', function (req, res) {
-  if (req.params.date === "")
-    res.json({"unix": new Date().getTime(),"utc": new Date().toUTCString()})
-  /*res.json({"utc": new Date(req.params.date)}, function (err, json) {
-    if (err) return console.log(err);
-    done(null, json);
-  })*/
+app.get('/api/', function (req, res) {
+  res.json({"unix": new Date().getTime(),"utc": new Date().toUTCString()})
+})
 
-  if (Number.isInteger(req.params.date)) {
+app.get('/api/:date', function (req, res) {
+  console.log(isNaN(req.params.date))
+  if(isNaN(req.params.date))
     res.json({"unix": new Date(req.params.date).getTime(),"utc": new Date(req.params.date).toUTCString()})
-  } else {
-    res.json({"unix": new Date(parseInt(req.params.date)).getTime(),"utc": new Date(parseInt(req.params.date)).toUTCString()})
-  }
+  else
+    res.json({"unix": new Date(req.params.date.toString()).getTime(),"utc": new Date(req.params.date.toString()).toUTCString()})
 })
 
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var port = process.env.PORT || 3000;
+var listener = app.listen(port, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
