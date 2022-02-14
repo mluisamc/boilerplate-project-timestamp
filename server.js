@@ -30,7 +30,7 @@ app.get('/api/', function (req, res) {
 })
 
 app.get('/api/:date', function (req, res) {
-  if(new Date(req.params.date).toUTCString() == "Invalid Date"){
+  if(new Date(req.params.date).toUTCString() == "Invalid Date" && new Date(parseInt(req.params.date)).toUTCString() == "Invalid Date" ){
     res.json({ error : "Invalid Date" })
   } else{
     if(isNaN(req.params.date))
