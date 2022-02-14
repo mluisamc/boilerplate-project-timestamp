@@ -30,10 +30,14 @@ app.get('/api/', function (req, res) {
 })
 
 app.get('/api/:date', function (req, res) {
-  if(isNaN(req.params.date))
-    res.json({"unix": new Date(req.params.date).getTime(),"utc": new Date(req.params.date).toUTCString()})
-  else
-    res.json({"unix": new Date(parseInt(req.params.date)).getTime(),"utc": new Date(parseInt(req.params.date)).toUTCString()})
+  if(new Date(req.params.date).toUTCString() == "Invalid Date"){
+    res.json({ error : "Invalid Date" })
+  } else{
+    if(isNaN(req.params.date))
+      res.json({"unix": new Date(req.params.date).getTime(),"utc": new Date(req.params.date).toUTCString()})
+    else
+      res.json({"unix": new Date(parseInt(req.params.date)).getTime(),"utc": new Date(parseInt(req.params.date)).toUTCString()})
+  }
 })
 
 
